@@ -28,7 +28,7 @@ class Util{
 	}
 }
 
-function onWakeUp(sNetworkAddress){
+function onWakeUp(sHardwareAddress){
 	
 }
 
@@ -37,8 +37,8 @@ function onLoad(oData){
 	var sContent = "";
 	for (d in oData){
 		var sCard = Util.buildCard(oData[d].name,
-			"Network address: " + oData[d].networkAddress,
-			"onWakeUp('" + oData[d].networkAddress + "');");
+			"Hardware address: " + oData[d].hardwareAddress,
+			"onWakeUp('" + oData[d].hardwareAddress + "');");
 		sContent+= "\n" + sCard;
 	}
 	$("#devices").html(sContent);
