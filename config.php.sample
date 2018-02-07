@@ -9,7 +9,7 @@ class Config {
 	public static $devices = array(
 		array(
 			"name" => "testdevice",
-			"networkAddress" => "00:00:00:00:00:00"
+			"hardwareAddress" => "00:00:00:00:00:00"
 		)
 	);
 	
