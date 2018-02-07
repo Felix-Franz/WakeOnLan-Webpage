@@ -7,8 +7,9 @@
 	<script src="./resources/mdl/material.min.js"></script>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<script src="./resources/jquery-3.3.1.min.js"></script>
+	<script src="./script.js"></script>
 </head>
-<body>
+<body onload="onInit();">
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 		<header class="mdl-layout__header">
 			<div class="mdl-layout__header-row">
@@ -32,6 +33,9 @@
 			</div>
 		</main>
 	</div>
-	<script src="./script.js"></script>
+	<div id="toast" class="mdl-js-snackbar mdl-snackbar">
+		<div class="mdl-snackbar__text"></div>
+		<button class="mdl-snackbar__action" type="button"></button>
+	</div>
 </body>
 </html>

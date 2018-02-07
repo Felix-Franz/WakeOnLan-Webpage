@@ -1,6 +1,58 @@
+var storage = {
+	devices: {},
+	card: '<div class="demo-card-square mdl-card mdl-shadow--2dp">'
+		+ '\n' + '	<div class="mdl-card__title mdl-card--expand" style="align-self: center;">'
+		+ '\n' + '		<h2 class="mdl-card__title-text">{{header}}</h2>'
+		+ '\n' + '	</div>'
+		+ '\n' + '	<div class="mdl-card__supporting-text">'
+		+ '\n' + '		{{body}}'
+		+ '\n' + '	</div>'
+		+ '\n' + '	<div class="mdl-card__actions mdl-card--border">'
+		+ '\n' + '		<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick="{{onclick}}">'
+		+ '\n' + '		Wake up!'
+		+ '\n' + '		</a>'
+		+ '\n' + '	</div>'
+		+ '\n' + '</div>'
+};
 
-function onInit(){
+class Util{
+	static showToast(sMessage){
+		document.querySelector("#toast").MaterialSnackbar.showSnackbar({message: sMessage});
+	}
+	
+	static buildCard(sHeader, sBody, sOnClick){
+		var sCard = storage.card;
+		return sCard.replace(/{{header}}/, sHeader)
+			.replace(/{{body}}/, sBody)
+			.replace(/{{onclick}}/, sOnClick);
+	}
+}
+
+function onWakeUp(sNetworkAddress){
 	
 }
 
-onInit();
+function onLoad(oData){
+	storage.devices = oData;
+	var sContent = "";
+	for (d in oData){
+		var sCard = Util.buildCard(oData[d].name,
+			"Network address: " + oData[d].networkAddress,
+			"onWakeUp('" + oData[d].networkAddress + "');");
+		sContent+= "\n" + sCard;
+	}
+	$("#devices").html(sContent);
+}
+
+function onInit(){
+	$.ajax({
+        type: "GET",
+        url: "./wol.php",
+        success: function (oData){
+			onLoad(JSON.parse(oData));
+		},
+        error: function(XMLHttpRequest, textStatus, errorThrown){
+            Util.showToast("Could not get devices!");
+        }
+    });
+}
