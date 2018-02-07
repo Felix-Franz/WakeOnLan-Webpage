@@ -1,0 +1,18 @@
+<?php
+
+class Config {
+
+	public static $users = array(
+		"user" => "pass"
+	);
+	
+	public static $devices = array(
+		array(
+			"name" => "testdevice",
+			"networkAddress" => "00:00:00:00:00:00"
+		)
+	);
+	
+}
+
+?>
