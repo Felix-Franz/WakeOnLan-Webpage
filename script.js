@@ -32,7 +32,7 @@ function onWakeUp(sHardwareAddress){
 	
 }
 
-function onLoad(oData){
+function onBuildDeviceCard(oData){
 	storage.devices = oData;
 	var sContent = "";
 	for (d in oData){
@@ -44,15 +44,19 @@ function onLoad(oData){
 	$("#devices").html(sContent);
 }
 
-function onInit(){
+function onLoad(){
 	$.ajax({
-        type: "GET",
-        url: "./api/wol.php",
-        success: function (oData){
-			onLoad(JSON.parse(oData));
+		type: "GET",
+		url: "./api/wol.php",
+		success: function (oData){
+			onBuildDeviceCard(JSON.parse(oData));
 		},
-        error: function(XMLHttpRequest, textStatus, errorThrown){
-            Util.showToast("Could not get devices!");
-        }
-    });
+		error: function(XMLHttpRequest, textStatus, errorThrown){
+			Util.showToast("Could not get devices!");
+		}
+	});
+}
+
+function onInit(){
+	onLoad();
 }
