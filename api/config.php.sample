@@ -3,13 +3,18 @@
 class Config {
 
 	public static $users = array(
-		"user" => "pass"
+		"user1" => "pass1",
+		"user2" => "pass2"
 	);
 	
 	public static $devices = array(
 		array(
-			"name" => "testdevice",
-			"hardwareAddress" => "00:00:00:00:00:00"
+			"name" => "testdevice1",
+			"hardwareAddress" => "00:00:00:00:00:01"
+		),
+		array(
+			"name" => "testdevice2",
+			"hardwareAddress" => "00:00:00:00:00:02"
 		)
 	);
 	
