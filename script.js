@@ -49,7 +49,8 @@ function onLoad(){
 		type: "GET",
 		url: "./api/wol.php",
 		success: function (oData){
-			onBuildDeviceCard(JSON.parse(oData));
+			console.log(oData);
+			onBuildDeviceCard(oData);
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown){
 			Util.showToast("Could not get devices!");

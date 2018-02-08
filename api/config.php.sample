@@ -1,6 +1,8 @@
 <?php
 
 class Config {
+	
+	public static $hashAlgorithm = false;	//false: passwords don't need to be saved in $user variable, otherwise you can use "md5", "sha256", ... as hash algorithms
 
 	public static $users = array(
 		"user1" => "pass1",
