@@ -47,7 +47,7 @@ function onLoad(oData){
 function onInit(){
 	$.ajax({
         type: "GET",
-        url: "./wol.php",
+        url: "./api/wol.php",
         success: function (oData){
 			onLoad(JSON.parse(oData));
 		},
