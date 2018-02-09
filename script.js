@@ -39,7 +39,7 @@ class Util{
 	}
 	
 	static getAuthorizationHeader(){
-	    if (!storage.login.user || !storage.login.password) return;
+	    if (!storage.login.user && !storage.login.password) return;
         return "Basic " + btoa(storage.login.user + ":" + storage.login.password);
     }
 	
@@ -59,7 +59,8 @@ function handleAuthorizationError(XMLHttpRequest, fnAfter, aAfter){
 	if (XMLHttpRequest.status !== 401 && XMLHttpRequest.status !== 403) return true;
 	storage.afterLogin.func = fnAfter;
 	storage.afterLogin.parameter = aAfter;
-	var bWrongCredentials = XMLHttpRequest.status === 403;
+	if (XMLHttpRequest.status === 403) document.getElementById("login-wrong").style.display = null;
+	else document.getElementById("login-wrong").style.display = 'none'
 	var dialog = document.querySelector('dialog').showModal();
 }
 

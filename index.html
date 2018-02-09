@@ -49,13 +49,14 @@
 		<div class="mdl-dialog__content">
 			<p>Please insert username and password.</p>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type="text" id="user">
+				<input class="mdl-textfield__input" type="text" id="user" onkeypress="if (event.keyCode === 13) setUserCredentials();">
 				<label class="mdl-textfield__label" for="user">username</label>
 			</div>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type="password" id="password">
+				<input class="mdl-textfield__input" type="password" id="password" onkeypress="if (event.keyCode === 13) setUserCredentials();">
 				<label class="mdl-textfield__label" for="password">password</label>
 			</div>
+			<p id="login-wrong" style="color: red;">Wrong user credentials!<br />Please try again!</p>
 		</div>
 		<div class="mdl-dialog__actions">
 			<button type="button" class="mdl-button" onclick="setUserCredentials();">Login</button>
