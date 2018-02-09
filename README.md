@@ -4,13 +4,11 @@ A webpage that should be displayed if a server (behind a reverse proxy) is power
 
 ## Installation nginx
 
-> Installation instructions will be improved after development work is done
-
 - update list of available packages `apt update`
 - install required package `apt install wakeonlan git`
 - install webserver nginx and php7.1 `apt install nginx php7.1-fpm`
-- Configure WakeOnLan-Webpage to run as normal webpage **OR** to run only if reverse proxy is down
-- Add Config
+- Configure WakeOnLan-Webpage [to run as normal webpage](#configure-wakeonlan-webpage-to-run-as-normal-webpage) **OR** [to run only if reverse proxy is down](#configure-wakeonlan-webpage-to-run-only-if-reverse-proxy-is-down)
+- [Add Config](#add-config)
 - Visit IP of the configured server using a browser
 
 > The webpage should be accessable using a encrypted connection only, because username and password is transfered base64 encoded and **not encrypted**! The easiest way would be advicing your webserver (e.g. nginx) to provide a https (ssl) connection only.
