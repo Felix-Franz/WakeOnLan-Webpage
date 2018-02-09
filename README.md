@@ -23,7 +23,7 @@ A webpage that should be displayed if a server (behind a reverse proxy) is power
         #       include snippets/fastcgi-php.conf;
         #
         #       # With php-fpm (or other unix sockets):
-        #       fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+        #       fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
         #       # With php-cgi (or other tcp sockets):
         #       fastcgi_pass 127.0.0.1:9000;
         #}
@@ -36,7 +36,7 @@ A webpage that should be displayed if a server (behind a reverse proxy) is power
                include snippets/fastcgi-php.conf;
         #
         #       # With php-fpm (or other unix sockets):
-               fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+               fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
         #       # With php-cgi (or other tcp sockets):
         #       fastcgi_pass 127.0.0.1:9000;
         }
@@ -48,7 +48,59 @@ A webpage that should be displayed if a server (behind a reverse proxy) is power
 - open WakeOnLan-Webpage directory `cd /var/www/html/`
 
 ### Configure WakeOnLan-Webpage to run only if reverse proxy is down
-- clone this repo into webroot `git clone https://github.com/Felix-Franz/WakeOnLan-Webpage.git`
+- create new directory `mkdir /var/www/html/wol`
+- open nginx default website configuration `nano /etc/nginx/sites-enabled/default`
+- go to php configuration part of this file 
+```
+        # pass PHP scripts to FastCGI server
+        #
+        #location ~ \.php$ {
+        #       include snippets/fastcgi-php.conf;
+        #
+        #       # With php-fpm (or other unix sockets):
+        #       fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
+        #       # With php-cgi (or other tcp sockets):
+        #       fastcgi_pass 127.0.0.1:9000;
+        #}
+```
+- unccomment the 4 lines:
+```
+        # pass PHP scripts to FastCGI server
+        #
+        location ~ \.php$ {
+               include snippets/fastcgi-php.conf;
+        #
+        #       # With php-fpm (or other unix sockets):
+               fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
+        #       # With php-cgi (or other tcp sockets):
+        #       fastcgi_pass 127.0.0.1:9000;
+        }
+```
+- insert reverse proxy (`between server_name _;` and `location / {`) 
+> currently not working :(
+```
+        server_name _;
+
+        location /proxy{
+                proxy_set_header X-Real-IP  $remote_addr;
+                proxy_set_header X-Forwarded-For $remote_addr;
+                proxy_set_header Host $host;
+
+                proxy_pass http://enter_your_address/;
+                error_page 502 =200 /wol;
+                break;
+        }
+
+        location / {
+                # First attempt to serve request as file, then
+                # as directory, then fall back to displaying a 404.
+                try_files $uri $uri/ =404;
+        }
+```
+- save and exit configuration file using `F3` and `F2`
+- reload nginx `service nginx reload`
+- download WakeOnLan-Webpage `git clone https://github.com/Felix-Franz/WakeOnLan-Webpage.git /var/www/html/wol/`
+- open WakeOnLan-Webpage directory `cd /var/www/html/`
 
 ### Add Config
 
