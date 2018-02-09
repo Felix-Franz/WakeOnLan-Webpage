@@ -13,25 +13,25 @@ function error(){
 }
 
 function authorize($rawBasicAuth){
-	if (substr( $rawBasicAuth, 0, 6 ) !== "Basic ") error("Use Basic Authentification!", 400);
+	if (substr( $rawBasicAuth, 0, 6 ) !== "Basic ") error("Use Basic Authentification to provide username and password!", 401);
 	$encodedBasicAuth = substr( $rawBasicAuth, 6, strlen($rawBasicAuth) );
 	$basicAuth = base64_decode($encodedBasicAuth);
 	$splittedBasicAuth = explode(":", $basicAuth);
 	$user = $splittedBasicAuth[0];
 	$password = $splittedBasicAuth[1];
-	if (Config::$hashAlgorithm) $password = hash(Config::$hashAlgorithm ,$password); //TODO hash password
+	if (Config::$hashAlgorithm) $password = hash(Config::$hashAlgorithm ,$password);
 	if (Config::$users[$user] !== $password) error("Wrong username or password", 403);
 }
 
 function handlePost($header, $body){
-	//authorize($header["AUTHORIZATION"]);
+	authorize($header["AUTHORIZATION"]);
 	$hardwareAddress = Config::$devices[$body->id][hardwareAddress];
 	exec("wakeonlan " . $hardwareAddress, $output, $errorCode);
 	if ($errorCode == 0) return $output[0];
 	else error("could not wakeonlan " . Config::$devices[$body->id][name] . "!", 500);
 }
 
-function handleGet($body){
+function handleGet($header, $body){
 	$devices = Config::$devices;
 	for ($i=0; $i<count($devices); $i++){
 		$devices[$i]["id"] = $i;

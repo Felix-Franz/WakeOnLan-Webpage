@@ -1,5 +1,9 @@
 var storage = {
-	devices: {}
+	devices: {},
+	login:{
+	   user: undefined,
+        password: undefined
+    }
 };
 var staticStorage = {
     endpoint: "./api/wol.php",
@@ -29,20 +33,37 @@ class Util{
 			.replace(/{{body}}/, sBody)
 			.replace(/{{onclick}}/, sOnClick);
 	}
+	
+	static getAuthorizationHeader(){
+	    if (!storage.login.user || !storage.login.password) return;
+        return "Basic " + btoa(storage.login.user + ":" + storage.login.password);
+    }
+	
+	static handleAuthorizationError(XMLHttpRequest, fnAfter, aAfter){
+	    if (XMLHttpRequest.status !== 401 && XMLHttpRequest.status !== 403) return true;
+	    var bWrongCredentials = XMLHttpRequest.status === 403;
+	    Util.showToast("Authorization required")
+	    console.log(bWrongCredentials);
+	    console.log(fnAfter);
+	    console.log(aAfter);
+	    //fnAfter.apply(this, aAfter);
+    }
 }
 
 function onWakeUp(iId){
 	$.ajax({
 		type: "POST",
 		url: staticStorage.endpoint,
+		headers: {
+	       Authorization: Util.getAuthorizationHeader()
+		},
 		contentType: "application/json; charset=utf-8",
 		data: JSON.stringify({id: iId}),
 		success: function (oData){
-			console.log(oData);
+			Util.showToast(oData)
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown){
-		    console.log(XMLHttpRequest.responseText);
-			Util.showToast(XMLHttpRequest.responseText);
+		    if (Util.handleAuthorizationError(XMLHttpRequest, onWakeUp, [iId])) Util.showToast(XMLHttpRequest.responseText);
 		}
 	});
 }
