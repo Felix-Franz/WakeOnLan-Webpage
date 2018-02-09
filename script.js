@@ -2,8 +2,12 @@ var storage = {
 	devices: {},
 	login:{
 	   user: undefined,
-        password: undefined
-    }
+		password: undefined
+    },
+	afterLogin:{
+		func: undefined,
+		parameter: undefined
+	}
 };
 var staticStorage = {
     endpoint: "./api/wol.php",
@@ -39,15 +43,24 @@ class Util{
         return "Basic " + btoa(storage.login.user + ":" + storage.login.password);
     }
 	
-	static handleAuthorizationError(XMLHttpRequest, fnAfter, aAfter){
-	    if (XMLHttpRequest.status !== 401 && XMLHttpRequest.status !== 403) return true;
-	    var bWrongCredentials = XMLHttpRequest.status === 403;
-	    Util.showToast("Authorization required")
-	    console.log(bWrongCredentials);
-	    console.log(fnAfter);
-	    console.log(aAfter);
-	    //fnAfter.apply(this, aAfter);
-    }
+	
+}
+
+function setUserCredentials(){
+	document.querySelector('dialog').close();
+	storage.login.user = document.getElementById("user").value;
+	storage.login.password = document.getElementById("password").value;
+	storage.afterLogin.func.apply(this, storage.afterLogin.parameter);
+	storage.afterLogin.func = undefined;
+	storage.afterLogin.parameter = undefined;
+}
+
+function handleAuthorizationError(XMLHttpRequest, fnAfter, aAfter){
+	if (XMLHttpRequest.status !== 401 && XMLHttpRequest.status !== 403) return true;
+	storage.afterLogin.func = fnAfter;
+	storage.afterLogin.parameter = aAfter;
+	var bWrongCredentials = XMLHttpRequest.status === 403;
+	var dialog = document.querySelector('dialog').showModal();
 }
 
 function onWakeUp(iId){
@@ -63,7 +76,7 @@ function onWakeUp(iId){
 			Util.showToast(oData)
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown){
-		    if (Util.handleAuthorizationError(XMLHttpRequest, onWakeUp, [iId])) Util.showToast(XMLHttpRequest.responseText);
+		    if (handleAuthorizationError(XMLHttpRequest, onWakeUp, [iId])) Util.showToast(XMLHttpRequest.responseText);
 		}
 	});
 }

@@ -25,6 +25,7 @@ function authorize($rawBasicAuth){
 
 function handlePost($header, $body){
 	authorize($header["AUTHORIZATION"]);
+	if ($body->id === null) error("device id need to be provided!", 400);
 	$hardwareAddress = Config::$devices[$body->id][hardwareAddress];
 	exec("wakeonlan " . $hardwareAddress, $output, $errorCode);
 	if ($errorCode == 0) return $output[0];
