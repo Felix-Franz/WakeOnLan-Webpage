@@ -4,9 +4,13 @@ A webpage that should be displayed if a server (behind a reverse proxy) is power
 
 ## Installation
 
+> Installation instructions will be improved after development work is done
+
 - install `sudo apt install wakeonlan`
 - install nginx & php `sudo apt install nginx php7.1`
 - clone this repo into webroot
+
+> The webpage should be accessable using a encrypted connection only, because username and password is transfered base64 encoded and **not encrypted**! The easiest way would be advicing your webserver (e.g. nginx) to provide a https (ssl) connection only.
 
 ## Technology
 
