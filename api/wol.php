@@ -35,6 +35,7 @@ function handleGet($header, $body){
 	$devices = Config::$devices;
 	for ($i=0; $i<count($devices); $i++){
 		$devices[$i]["id"] = $i;
+		unset($devices[$i]["hardwareAddress"]);
 	}
 	header('Content-Type: application/json');
 	return json_encode($devices);

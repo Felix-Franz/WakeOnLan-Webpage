@@ -73,7 +73,7 @@ function onBuildDeviceCard(oData){
 	var sContent = "";
 	for (d in oData){
 		var sCard = Util.buildCard(oData[d].name,
-			"Hardware address: " + oData[d].hardwareAddress,
+			"Description: " + oData[d].description + "<br />IP-Address: " + oData[d].ipAddress,
 			"onWakeUp('" + oData[d].id + "');");
 		sContent+= "\n" + sCard;
 	}

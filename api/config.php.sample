@@ -2,21 +2,25 @@
 
 class Config {
 	
-	public static $hashAlgorithm = false;	//false: passwords don't need to be saved in $user variable, otherwise you can use "md5", "sha256", ... as hash algorithms
+	public static $hashAlgorithm = "sha256";	//false: passwords don't need to be saved in $user variable, otherwise you can use "md5", "sha256", ... as hash algorithms
 
 	public static $users = array(
-		"user1" => "pass1",
+		"user1" => "e6c3da5b206634d7f3f3586d747ffdb36b5c675757b380c6a5fe5c570c714349",
 		"user2" => "pass2"
 	);
 	
 	public static $devices = array(
 		array(
 			"name" => "testdevice1",
-			"hardwareAddress" => "00:00:00:00:00:01"
+			"description" => "first test device",
+			"hardwareAddress" => "00:00:00:00:00:01",
+			"ipAddress" => "10.0.0.001"
 		),
 		array(
 			"name" => "testdevice2",
-			"hardwareAddress" => "00:00:00:00:00:02"
+			"description" => "second test device",
+			"hardwareAddress" => "00:00:00:00:00:02",
+			"ipAddress" => "10.0.0.002"
 		)
 	);
 	
