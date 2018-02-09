@@ -24,11 +24,11 @@ function authorize($rawBasicAuth){
 }
 
 function handlePost($header, $body){
-	authorize($header["AUTHORIZATION"]);
+	//authorize($header["AUTHORIZATION"]);
 	$hardwareAddress = Config::$devices[$body->id][hardwareAddress];
 	exec("wakeonlan " . $hardwareAddress, $output, $errorCode);
 	if ($errorCode == 0) return $output[0];
-	else error("could not execute " . "wakeonlan " . $hardwareAddress . "!", 500);
+	else error("could not wakeonlan " . Config::$devices[$body->id][name] . "!", 500);
 }
 
 function handleGet($body){

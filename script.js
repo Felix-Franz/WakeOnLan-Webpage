@@ -1,5 +1,8 @@
 var storage = {
-	devices: {},
+	devices: {}
+};
+var staticStorage = {
+    endpoint: "./api/wol.php",
 	card: '<div class="demo-card-square mdl-card mdl-shadow--2dp" style="width: 100%; margin: 1em;">'
 		+ '\n' + '	<div class="mdl-card__title mdl-card--expand" style="align-self: center;">'
 		+ '\n' + '		<h2 class="mdl-card__title-text">{{header}}</h2>'
@@ -13,7 +16,7 @@ var storage = {
 		+ '\n' + '		</a>'
 		+ '\n' + '	</div>'
 		+ '\n' + '</div>'
-};
+}
 
 class Util{
 	static showToast(sMessage){
@@ -21,15 +24,27 @@ class Util{
 	}
 	
 	static buildCard(sHeader, sBody, sOnClick){
-		var sCard = storage.card;
+		var sCard = staticStorage.card;
 		return sCard.replace(/{{header}}/, sHeader)
 			.replace(/{{body}}/, sBody)
 			.replace(/{{onclick}}/, sOnClick);
 	}
 }
 
-function onWakeUp(sHardwareAddress){
-	
+function onWakeUp(iId){
+	$.ajax({
+		type: "POST",
+		url: staticStorage.endpoint,
+		contentType: "application/json; charset=utf-8",
+		data: JSON.stringify({id: iId}),
+		success: function (oData){
+			console.log(oData);
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown){
+		    console.log(XMLHttpRequest.responseText);
+			Util.showToast(XMLHttpRequest.responseText);
+		}
+	});
 }
 
 function onBuildDeviceCard(oData){
@@ -38,7 +53,7 @@ function onBuildDeviceCard(oData){
 	for (d in oData){
 		var sCard = Util.buildCard(oData[d].name,
 			"Hardware address: " + oData[d].hardwareAddress,
-			"onWakeUp('" + oData[d].hardwareAddress + "');");
+			"onWakeUp('" + oData[d].id + "');");
 		sContent+= "\n" + sCard;
 	}
 	$("#devices").html(sContent);
@@ -47,9 +62,8 @@ function onBuildDeviceCard(oData){
 function onLoad(){
 	$.ajax({
 		type: "GET",
-		url: "./api/wol.php",
+		url: staticStorage.endpoint,
 		success: function (oData){
-			console.log(oData);
 			onBuildDeviceCard(oData);
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown){
