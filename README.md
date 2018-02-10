@@ -127,5 +127,8 @@ If you use another webserver the installation procress is nearly the same, but y
 
 ## Technology
 
-- [Material Design Lite](https://getmdl.io/)
-- [jQuery](https://jquery.com/)
+Following technologies are used:
+- Backend: [PHP 7.1](http://php.net)
+- Frontend: HTML, Javascript, CSS and following libraries
+	- [Material Design Lite](https://getmdl.io/)
+	- [jQuery](https://jquery.com/)
