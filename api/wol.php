@@ -1,10 +1,6 @@
 <?php
 require_once('config.php');
 
-//var_dump(Config::$users);
-//echo("<br /> <br />");
-//var_dump(Config::$devices);
-
 function error(){
 	$message = func_get_arg(0);
 	$errorCode = func_get_arg(1);
