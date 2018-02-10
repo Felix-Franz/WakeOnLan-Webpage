@@ -86,7 +86,7 @@ A webpage that should be displayed if a server (behind a reverse proxy) is power
                 proxy_set_header Host $host;
 
                 proxy_pass https://server_address/;        # add address of your server behind the reverse proxy
-                error_page 502 @wol;
+                error_page 502 504 @wol;
                 break;
         }
 
@@ -96,7 +96,6 @@ A webpage that should be displayed if a server (behind a reverse proxy) is power
 
         location /wol{
                 root /var/www/html;
-                #proxy_pass http://$host:81$request_uri;
         }
 
 #        location / {
