@@ -116,6 +116,7 @@ A webpage that should be displayed if a server (behind a reverse proxy) is power
 - edit config `nano api/config.php`
 - you can add users in the user array (just like user1 an user2)
 - if you set the option hashAlgorithm to anything else than false, you need to enter passwordhash using the hash Algorithm that you have set in this option
+- the broadcastIpAddress is the address where the wol command is send to. It is the last ip address in your network (mostly it ends with 255)
 - to add other devices use the devices section (enter all credentials like provided in testdevice1 and testdevice2)
 - save and exit configuration file using `F3` and `F2`
 
