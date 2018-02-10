@@ -76,26 +76,35 @@ A webpage that should be displayed if a server (behind a reverse proxy) is power
         #       fastcgi_pass 127.0.0.1:9000;
         }
 ```
-- insert reverse proxy (`between server_name _;` and `location / {`) 
+- insert reverse proxy (`between server_name _;` and `location / {`, don't forget to comment the last one)
 > currently not working :(
 ```
         server_name _;
 
-        location /proxy{
+        location /{
                 proxy_set_header X-Real-IP  $remote_addr;
                 proxy_set_header X-Forwarded-For $remote_addr;
                 proxy_set_header Host $host;
 
-                proxy_pass http://enter_your_address/;
-                error_page 502 =200 /wol;
+                proxy_pass https://server_address/;        # add address of your server behind the reverse proxy
+                error_page 502 @wol;
                 break;
         }
 
-        location / {
+        location @wol{
+                return 302 http://$host/wol/;
+        }
+
+        location /wol{
+                root /var/www/html;
+                #proxy_pass http://$host:81$request_uri;
+        }
+
+#        location / {
                 # First attempt to serve request as file, then
                 # as directory, then fall back to displaying a 404.
-                try_files $uri $uri/ =404;
-        }
+#                try_files $uri $uri/ =404;
+#        }
 ```
 - save and exit configuration file using `F3` and `F2`
 - reload nginx `service nginx reload`
