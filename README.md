@@ -77,7 +77,6 @@ A webpage that should be displayed if a server (behind a reverse proxy) is power
         }
 ```
 - insert reverse proxy (`between server_name _;` and `location / {`, don't forget to comment the last one)
-> currently not working :(
 ```
         server_name _;
 
