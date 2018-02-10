@@ -9,6 +9,8 @@ class Config {
 		"user2" => "pass2"
 	);
 	
+	public static $broadcastIpAddress = "10.0.0.255";
+	
 	public static $devices = array(
 		array(
 			"name" => "testdevice1",
