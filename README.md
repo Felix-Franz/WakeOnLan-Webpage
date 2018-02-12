@@ -107,7 +107,7 @@ A webpage that should be displayed if a server (behind a reverse proxy) is power
 - save and exit configuration file using `F3` and `F2`
 - reload nginx `service nginx reload`
 - download WakeOnLan-Webpage `git clone https://github.com/Felix-Franz/WakeOnLan-Webpage.git /var/www/html/wol/`
-- open WakeOnLan-Webpage directory `cd /var/www/html/`
+- open WakeOnLan-Webpage directory `cd /var/www/html/wol/`
 
 ### Add Config
 
