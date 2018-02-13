@@ -86,7 +86,7 @@ A webpage that should be displayed if a server (behind a reverse proxy) is power
                 proxy_set_header Host $host;
 
                 proxy_pass https://server_address/;        # add address of your server behind the reverse proxy
-                error_page 502 @wol;
+                error_page 502 504 @wol;
                 break;
         }
 
@@ -96,7 +96,6 @@ A webpage that should be displayed if a server (behind a reverse proxy) is power
 
         location /wol{
                 root /var/www/html;
-                #proxy_pass http://$host:81$request_uri;
         }
 
 #        location / {
@@ -108,15 +107,17 @@ A webpage that should be displayed if a server (behind a reverse proxy) is power
 - save and exit configuration file using `F3` and `F2`
 - reload nginx `service nginx reload`
 - download WakeOnLan-Webpage `git clone https://github.com/Felix-Franz/WakeOnLan-Webpage.git /var/www/html/wol/`
-- open WakeOnLan-Webpage directory `cd /var/www/html/`
+- open WakeOnLan-Webpage directory `cd /var/www/html/wol/`
 
 ### Add Config
 
 - generate a demo config file `cp api/config.php.sample api/config.php`
 - edit config `nano api/config.php`
+<<<<<<< HEAD
 - adjust the auth level: 0: no authorization required, 1: authorization required to wake on lan devices, 2: authorization required to view or wake on lan devices
 - you can add users in the user array (just like user1 an user2), if you choose authLevel=0 you can skip this
 - if you set the option hashAlgorithm to anything else than false, you need to enter passwordhash using the hash Algorithm that you have set in this option, if you choose authLevel=0 you can skip this
+- the broadcastIpAddress is the address where the wol command is sent to. It is the last ip address in your network (mostly it ends with 255)
 - to add other devices use the devices section (enter all credentials like provided in testdevice1 and testdevice2)
 - save and exit configuration file using `F3` and `F2`
 
