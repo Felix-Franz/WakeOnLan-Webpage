@@ -4,6 +4,8 @@ class Config {
 	
 	public static $hashAlgorithm = "sha256";	//false: passwords don't need to be saved in $user variable, otherwise you can use "md5", "sha256", ... as hash algorithms
 
+	public static $authLevel = 2;				//0: no authorization required, 1: authorization required to wake on lan devices, 2: authorization required to view or wake on lan devices
+	
 	public static $users = array(
 		"user1" => "e6c3da5b206634d7f3f3586d747ffdb36b5c675757b380c6a5fe5c570c714349",
 		"user2" => "pass2"

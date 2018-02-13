@@ -98,11 +98,14 @@ function onLoad(){
 	$.ajax({
 		type: "GET",
 		url: staticStorage.endpoint,
+		headers: {
+	       Authorization: Util.getAuthorizationHeader()
+		},
 		success: function (oData){
 			onBuildDeviceCard(oData);
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown){
-			Util.showToast("Could not get devices!");
+			if (handleAuthorizationError(XMLHttpRequest, onLoad)) Util.showToast("Could not get devices!");
 		}
 	});
 }

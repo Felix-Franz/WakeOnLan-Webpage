@@ -20,7 +20,7 @@ function authorize($rawBasicAuth){
 }
 
 function handlePost($header, $body){
-	authorize($header["AUTHORIZATION"]);
+	if (Config::$authLevel >=1) authorize($header["AUTHORIZATION"]);
 	if ($body->id === null) error("device id need to be provided!", 400);
 	$hardwareAddress = Config::$devices[$body->id][hardwareAddress];
 	exec("wakeonlan -i " . Config::$broadcastIpAddress . " " . $hardwareAddress, $output, $errorCode);
@@ -29,6 +29,7 @@ function handlePost($header, $body){
 }
 
 function handleGet($header, $body){
+	if (Config::$authLevel >=2) authorize($header["AUTHORIZATION"]);
 	$devices = Config::$devices;
 	for ($i=0; $i<count($devices); $i++){
 		$devices[$i]["id"] = $i;

@@ -114,8 +114,9 @@ A webpage that should be displayed if a server (behind a reverse proxy) is power
 
 - generate a demo config file `cp api/config.php.sample api/config.php`
 - edit config `nano api/config.php`
-- you can add users in the user array (just like user1 an user2)
-- if you set the option hashAlgorithm to anything else than false, you need to enter passwordhash using the hash Algorithm that you have set in this option
+- adjust the auth level: 0: no authorization required, 1: authorization required to wake on lan devices, 2: authorization required to view or wake on lan devices
+- you can add users in the user array (just like user1 an user2), if you choose authLevel=0 you can skip this
+- if you set the option hashAlgorithm to anything else than false, you need to enter passwordhash using the hash Algorithm that you have set in this option, if you choose authLevel=0 you can skip this
 - to add other devices use the devices section (enter all credentials like provided in testdevice1 and testdevice2)
 - save and exit configuration file using `F3` and `F2`
 
