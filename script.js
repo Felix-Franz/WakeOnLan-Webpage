@@ -7,7 +7,8 @@ var storage = {
 	afterLogin:{
 		func: undefined,
 		parameter: undefined
-	}
+	},
+	loginDialog: undefined
 };
 var staticStorage = {
     endpoint: "./api/wol.php",
@@ -47,7 +48,7 @@ class Util{
 }
 
 function setUserCredentials(){
-	document.querySelector('dialog').close();
+	storage.loginDialog.hide();
 	storage.login.user = document.getElementById("user").value;
 	storage.login.password = document.getElementById("password").value;
 	storage.afterLogin.func.apply(this, storage.afterLogin.parameter);
@@ -57,11 +58,15 @@ function setUserCredentials(){
 
 function handleAuthorizationError(XMLHttpRequest, fnAfter, aAfter){
 	if (XMLHttpRequest.status !== 401 && XMLHttpRequest.status !== 403) return true;
-	storage.afterLogin.func = fnAfter;
+	storage.afterLogin.func = function(){
+		setTimeout(function(){
+			fnAfter.apply(this, arguments);
+		}, 501);
+	}
 	storage.afterLogin.parameter = aAfter;
 	if (XMLHttpRequest.status === 403) document.getElementById("login-wrong").style.display = null;
 	else document.getElementById("login-wrong").style.display = 'none'
-	var dialog = document.querySelector('dialog').showModal();
+	storage.loginDialog.show();
 }
 
 function onWakeUp(iId){
@@ -111,5 +116,6 @@ function onLoad(){
 }
 
 function onInit(){
+	storage.loginDialog = new Dialog("loginDialog");
 	onLoad();
 }

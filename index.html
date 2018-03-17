@@ -5,9 +5,11 @@
 	<link rel="icon" type="image/png" href="resources/favicon.png" sizes="952x952">
 	
 	<link rel="stylesheet" href="./resources/mdl/material_grey-yellow.min.css">
+	<link rel="stylesheet" href="./dialog.css">
 	<script src="./resources/mdl/material.min.js"></script>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<script src="./resources/jquery-3.3.1.min.js"></script>
+	<script src="./dialog.js"></script>
 	<script src="./script.js"></script>
 </head>
 <body onload="onInit();">
@@ -45,9 +47,9 @@
 		<button class="mdl-snackbar__action" type="button"></button>
 	</div>
 	
-	<dialog class="mdl-dialog" id="dialog-login">
-		<h4 class="mdl-dialog__title">Login</h4>
-		<div class="mdl-dialog__content">
+	<div id="loginDialog" class="dialog">
+		<div class="dialog-background"></div>
+		<div class="dialog-content">
 			<p>Please insert username and password.</p>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 				<input class="mdl-textfield__input" type="text" id="user" onkeypress="if (event.keyCode === 13) setUserCredentials();">
@@ -58,11 +60,30 @@
 				<label class="mdl-textfield__label" for="password">password</label>
 			</div>
 			<p id="login-wrong" style="color: red;">Wrong user credentials!<br />Please try again!</p>
+			<div align="right" style="margin: 1em;">
+				<button class="mdl-button mdl-js-button mdl-button--raised" onclick="setUserCredentials();">Login</button>
+			</div>
 		</div>
-		<div class="mdl-dialog__actions">
-			<button type="button" class="mdl-button" onclick="setUserCredentials();">Login</button>
-		</div>
-	</dialog>
+	</div>
+	
+	<!-- <dialog class="mdl-dialog" id="dialog-login"> -->
+		<!-- <h4 class="mdl-dialog__title">Login</h4> -->
+		<!-- <div class="mdl-dialog__content"> -->
+			<!-- <p>Please insert username and password.</p> -->
+			<!-- <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"> -->
+				<!-- <input class="mdl-textfield__input" type="text" id="user" onkeypress="if (event.keyCode === 13) setUserCredentials();"> -->
+				<!-- <label class="mdl-textfield__label" for="user">username</label> -->
+			<!-- </div> -->
+			<!-- <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"> -->
+				<!-- <input class="mdl-textfield__input" type="password" id="password" onkeypress="if (event.keyCode === 13) setUserCredentials();"> -->
+				<!-- <label class="mdl-textfield__label" for="password">password</label> -->
+			<!-- </div> -->
+			<!-- <p id="login-wrong" style="color: red;">Wrong user credentials!<br />Please try again!</p> -->
+		<!-- </div> -->
+		<!-- <div class="mdl-dialog__actions"> -->
+			<!-- <button type="button" class="mdl-button" onclick="setUserCredentials();">Login</button> -->
+		<!-- </div> -->
+	<!-- </dialog> -->
 	
 </body>
 </html>
