@@ -1,6 +1,13 @@
 # WakeOnLan-Webpage
 A webpage that should be displayed if a server (behind a reverse proxy) is powered off to start it remotly. It is also possible to start multiple instances of servers.
 
+## Screenshots
+
+![](screenshots/desktop-login.PNG)
+![](screenshots/desktop-main.PNG)
+![](screenshots/mobile-login.PNG)
+![](screenshots/mobile-main.PNG)
+
 
 ## Installation nginx
 
