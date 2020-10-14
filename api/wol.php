@@ -5,6 +5,7 @@ function error(){
 	$message = func_get_arg(0);
 	$errorCode = func_get_arg(1);
 	if (!$errorCode) $errorCode = 500;
+	http_response_code($errorCode);
 	throw new Exception($message, $errorCode);
 }
 
@@ -22,10 +23,10 @@ function authorize($rawBasicAuth){
 function handlePost($header, $body){
 	if (Config::$authLevel >=1) authorize($header["AUTHORIZATION"]);
 	if ($body->id === null) error("device id need to be provided!", 400);
-	$hardwareAddress = Config::$devices[$body->id][hardwareAddress];
+	$hardwareAddress = Config::$devices[$body->id]["hardwareAddress"];
 	exec("wakeonlan -i " . Config::$broadcastIpAddress . " " . $hardwareAddress, $output, $errorCode);
 	if ($errorCode == 0) return $output[0];
-	else error("could not wakeonlan " . Config::$devices[$body->id][name] . "!", 500);
+	else error("could not wakeonlan " . Config::$devices[$body->id]["name"] . "!", 500);
 }
 
 function handleGet($header, $body){
